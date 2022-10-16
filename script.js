@@ -1,6 +1,8 @@
 var buttonToCheckPalindrome = document.querySelector("#check-btn");
 var bdayDate = document.querySelector("#bday-date");
 var result = document.querySelector("#result");
+const loadingImage=document.querySelector("#loading-image");
+loadingImage.style.display="none";
 
 function Ispalindrome(stringg) {
     var strSplitted = stringg.split('');
@@ -172,7 +174,6 @@ function findPreviousPalindromeDate(date) {
 
 
 function OnclickHandler() {
-    console.log("here");
     result.style.display = "none"
     var date = bdayDate.value.split('-')
     var yyyy = Number(date[0]);
@@ -184,7 +185,10 @@ function OnclickHandler() {
         year: yyyy
     }
     if ((bdayDate.value) !== '') {
-
+        
+        loadingImage.style.display="block";
+        setTimeout(()=> {
+            loadingImage.style.display = "none";
         if (IsAllFormatsOfDateAPalindrome(date)) {
             result.style.display = "block"
             result.style.color =" rgb(39, 11, 66)";
@@ -199,17 +203,19 @@ function OnclickHandler() {
             var ctr1 = NextPalindromeDate[0];
 
             if (ctr1 < ctr2) {
+                loadingImage.style.display="none";
                 var counter = `The  nearest palindrome date is ${NextDate.day}-${NextDate.month}-${NextDate.year}, you missed by ${ctr1} days.`;
                 result.style.display = "block"
                 result.style.color =" rgb(39, 11, 66)";
                 result.innerText = counter;
             } else {
+                loadingImage.style.display="none";
                 var counter = `The  nearest palindrome date is ${previousDate.day}-${previousDate.month}-${previousDate.year}, you missed by ${ctr2} days :-( `;
                 result.style.display = "block"
                 result.style.color =" rgb(39, 11, 66)";
                 result.innerText = counter;
             }
-        };
+        }},3000);
     } else {
         result.style.display = "block"
         result.style.color = "red"
